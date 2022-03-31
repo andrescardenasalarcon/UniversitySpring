@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 
 @Entity
-@Table(name = "docentes")
+@Table(name = "docente")
 public class Docente implements Serializable {
     private static final long serialVersion=1L;
 
@@ -24,7 +24,7 @@ public class Docente implements Serializable {
     private String nombreDocente;
 
     @Column(name = "tipo_docente")
-    private String tipoDocente;
+    private Integer tipoDocente;
 
     @JoinColumn(name = "cod_facultad", referencedColumnName = "cod_facultad")
     @ManyToOne(fetch = FetchType.EAGER)
@@ -34,7 +34,7 @@ public class Docente implements Serializable {
 
     }
 
-    public Docente(Long codDocentes, String docuemntoDocente, String apellidoDocente, String nombreDocente, String tipoDocente, Facultad idFacultad) {
+    public Docente(Long codDocentes, String docuemntoDocente, String apellidoDocente, String nombreDocente, Integer tipoDocente, Facultad idFacultad) {
         this.codDocentes = codDocentes;
         this.docuemntoDocente = docuemntoDocente;
         this.apellidoDocente = apellidoDocente;
@@ -75,11 +75,11 @@ public class Docente implements Serializable {
         this.nombreDocente = nombreDocente;
     }
 
-    public String getTipoDocente() {
+    public Integer getTipoDocente() {
         return tipoDocente;
     }
 
-    public void setTipoDocente(String tipoDocente) {
+    public void setTipoDocente(Integer tipoDocente) {
         this.tipoDocente = tipoDocente;
     }
 

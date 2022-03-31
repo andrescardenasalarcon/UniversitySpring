@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "facultades")
+@Table(name = "facultad")
 public class Facultad implements Serializable {
     private static final long serialVersion=1L;
     @Id

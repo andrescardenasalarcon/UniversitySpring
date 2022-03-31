@@ -4,13 +4,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "seccionales")
+@Table(name = "seccional")
 public class Seccional implements Serializable {
     private static final long serialVersion=1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cod_seccional")
-    private Long idSeccional;
+    private Long codSeccional;
 
     @Column(name = "direccion_seccional")
     private String direccionSeccional;
@@ -22,8 +22,8 @@ public class Seccional implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Universidad idUniversidad;
 
-    public Seccional(Long idSeccional, String direccionSeccional, String nombreSeccional, Universidad idUniversidad) {
-        this.idSeccional = idSeccional;
+    public Seccional(Long codSeccional, String direccionSeccional, String nombreSeccional, Universidad idUniversidad) {
+        this.codSeccional = codSeccional;
         this.direccionSeccional = direccionSeccional;
         this.nombreSeccional = nombreSeccional;
         this.idUniversidad = idUniversidad;
@@ -33,12 +33,12 @@ public class Seccional implements Serializable {
 
     }
 
-    public Long getIdSeccional() {
-        return idSeccional;
+    public Long getCodSeccional() {
+        return codSeccional;
     }
 
-    public void setIdSeccional(Long idSeccional) {
-        this.idSeccional = idSeccional;
+    public void setCodSeccional(Long codSeccional) {
+        this.codSeccional = codSeccional;
     }
 
     public String getDireccionSeccional() {
