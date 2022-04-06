@@ -15,7 +15,7 @@ public class Asignaturas implements Serializable {
     @Column(name = "semestre_asignatura")
     private Integer semestreAsignatura;
 
-    @Column(name = "nombre_asignatura")
+    @Column(name = "nombres_asignatura")
     private String nombreAsignatura;
 
     @Column(name = "codigo_asignatura")
@@ -24,7 +24,7 @@ public class Asignaturas implements Serializable {
     @Column(name = "tipo_asignatura")
     private String tipoAsigantura;
 
-    @JoinColumn(name = "cod_docentes", referencedColumnName = "cod_docentes")
+    @JoinColumn(name = "cod_docente", referencedColumnName = "cod_docente")
     @ManyToOne(fetch = FetchType.EAGER)
     private Docente idDocente;
 

@@ -1,0 +1,73 @@
+CREATE TABLE Universidad(
+  cod_universidad SERIAL NOT NULL,
+  nombre_universidad VARCHAR(200) NOT NULL,
+  nit_universidad VARCHAR(200) NOT NULL,
+  CONSTRAINT PK_UNIVERSIDAD PRIMARY KEY (cod_universidad)
+
+);
+
+
+CREATE TABLE Seccional(
+  cod_seccional SERIAL NOT NULL,
+  direccion_seccional VARCHAR(200) NOT NULL,
+  nombre_seccional VARCHAR (200) NOT NULL,
+  cod_universidad INT4 NOT NULL,
+  
+  CONSTRAINT PK_SECCIONAL PRIMARY KEY (cod_seccional)
+
+);
+
+
+CREATE TABLE Facultad(
+  cod_facultad SERIAL NOT NULL,
+  cod_seccional INT4 NOT NULL,
+  nombre_facultad VARCHAR (200) NOT NULL,
+  
+  CONSTRAINT PK_FACULTAD PRIMARY KEY (cod_facultad)
+);
+
+CREATE TABLE Docente(
+  cod_docente SERIAL NOT NULL,
+  cod_facultad INT4 NULL NULL,
+  documento_docente VARCHAR (200) NOT NULL,
+  nombre_docente VARCHAR (200) NOT NULL,
+  apellido_docente VARCHAR (200) NOT NULL,
+  tipo_docente INT NOT NULL,
+  CONSTRAINT PK_DOCENTE PRIMARY KEY (cod_docente)
+);
+
+CREATE TABLE Asignaturas (
+  cod_asignatura SERIAL NOT NULL,
+  cod_docente INT4 NOT NULL,
+  semestre_asignatura INT NOT NULL,
+  nombres_asignatura VARCHAR (200) NOT NULL,
+  codigo_asignatura INT NOT NULL,
+  tipo_asignatura VARCHAR (200) NOT NULL,
+  CONSTRAINT PK_ASIGNATURAS PRIMARY KEY (cod_asignatura)
+);
+
+
+ALTER TABLE Seccional
+  ADD CONSTRAINT FK_UNI_SECCI
+  FOREIGN KEY (cod_universidad)
+  REFERENCES Universidad (cod_universidad)
+  ON DELETE RESTRICT ON UPDATE CASCADE;
+
+
+ALTER TABLE Facultad
+  ADD CONSTRAINT FK_FAC_SECCI
+  FOREIGN KEY (cod_seccional)
+  REFERENCES Seccional (cod_seccional)
+  ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE Docente
+  ADD CONSTRAINT FK_DO_FACU
+  FOREIGN KEY (cod_facultad)
+  REFERENCES Facultad (cod_facultad)
+  ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE Asignaturas
+  ADD CONSTRAINT FK_ASIG_DOCE
+  FOREIGN KEY (cod_docente)
+  REFERENCES Docente (cod_docente)
+  ON DELETE RESTRICT ON UPDATE CASCADE;

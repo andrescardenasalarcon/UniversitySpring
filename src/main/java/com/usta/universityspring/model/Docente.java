@@ -11,7 +11,7 @@ public class Docente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cod_docentes")
+    @Column(name = "cod_docente")
     private Long codDocentes;
 
     @Column(name = "documento_docente")
