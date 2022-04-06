@@ -1,6 +1,7 @@
 package com.usta.universityspring.rest;
 
 import com.usta.universityspring.model.Asignaturas;
+import com.usta.universityspring.model.Universidad;
 import com.usta.universityspring.servicios.AsignaturaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,10 @@ public class AsignaturasRes {
     private ResponseEntity<List<Asignaturas>> listrarAsignaturas(){
         return ResponseEntity.ok(asignaturaServicio.listarAsignaturas());
     }
+    @GetMapping(value = "/listar/{id}")
+    private ResponseEntity<Optional<Asignaturas>> listrarAsignaturasById(@PathVariable("id")Long id){
+        return ResponseEntity.ok(asignaturaServicio.findByIdAsignatura(id));
+    }
     @PostMapping("/crearAsignaturas")
     private ResponseEntity<Asignaturas> crearAsignaturas(@RequestBody Asignaturas asignaturas){
         Asignaturas temporal = asignaturaServicio.crearAsignatura(asignaturas);
@@ -42,13 +47,8 @@ public class AsignaturasRes {
         }
     }
     @DeleteMapping("/Asignaturas/{id}")
-    public String eliminarAsignaturas(@PathVariable Long id){
-        Optional<Asignaturas> asignaturas = asignaturaServicio.findByIdAsignatura(id);
-        if (asignaturas.isPresent()){
-            asignaturaServicio.eliminarAsignatura(id);
-            return "Asignaturas eliminada con el id "+id;
-        }else{
-            throw new RuntimeException("Asignaturas no encontrada con ese id "+id);
-        }
+    public ResponseEntity<Void> eliminarAsignaturas(@PathVariable("id") Long id){
+        asignaturaServicio.eliminarAsignatura(id);
+        return ResponseEntity.ok().build();
     }
 }

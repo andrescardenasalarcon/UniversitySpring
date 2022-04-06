@@ -22,6 +22,7 @@ public class FacultadRes {
     private ResponseEntity<List<Facultad>> listrarFacultades(){
         return ResponseEntity.ok(facultadServicio.listarFacultades());
     }
+
     @PostMapping("/crearFacultad")
     private ResponseEntity<Facultad> crearFacultad(@RequestBody Facultad facultad){
         Facultad temporal = facultadServicio.crearFacultad(facultad);
@@ -45,14 +46,10 @@ public class FacultadRes {
         return ResponseEntity.ok(facultadServicio.findByIdFacultad(id));
     }
     @DeleteMapping("/facultad/{id}")
-    public String eliminarFacultad(@PathVariable Long id){
-        Optional<Facultad> facultad = facultadServicio.findByIdFacultad(id);
-        if (facultad.isPresent()){
-            facultadServicio.eliminarFacultad(id);
-            return "facultad eliminada con el id "+id;
-        }else{
-            throw new RuntimeException("facultad no encontrada con ese id "+id);
-        }
+    private ResponseEntity<Void>eliminarFacultad (@PathVariable("id") Long id){
+        facultadServicio.eliminarFacultad(id);
+        return ResponseEntity.ok().build();
     }
+
 
 }

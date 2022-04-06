@@ -1,5 +1,6 @@
 package com.usta.universityspring.rest;
 
+import com.usta.universityspring.model.Docente;
 import com.usta.universityspring.model.Seccional;
 import com.usta.universityspring.servicios.SeccionalServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,10 @@ public class SeccionalRes {
     private ResponseEntity<List<Seccional>> listrarSeccional(){
         return ResponseEntity.ok(seccionalServicio.getAllSeccional());
     }
+    @GetMapping(value = "/listar/{id}")
+    private ResponseEntity<Optional<Seccional>> listrarSeccionalById(@PathVariable("id")Long id){
+        return ResponseEntity.ok(seccionalServicio.findByIdSeccional(id));
+    }
     @PostMapping("/crearSeccional")
     private ResponseEntity<Seccional> crearSeccional(@RequestBody Seccional seccional){
         Seccional temporal = seccionalServicio.crearSeccional(seccional);
@@ -41,13 +46,8 @@ public class SeccionalRes {
         }
     }
     @DeleteMapping("/seccional/{id}")
-    public String eliminarSeccional(@PathVariable Long id){
-        Optional<Seccional> seccional = seccionalServicio.findByIdSeccional(id);
-        if (seccional.isPresent()){
-            seccionalServicio.eliminarSeccional(id);
-            return "seccional eliminada con el id "+id;
-        }else{
-            throw new RuntimeException("seccional no encontrada con ese id "+id);
-        }
+    public  ResponseEntity<Void> eliminarSeccional(@PathVariable("id") Long id){
+        seccionalServicio.eliminarSeccional(id);
+        return ResponseEntity.ok().build();
     }
 }

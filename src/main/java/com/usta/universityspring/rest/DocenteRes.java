@@ -1,5 +1,6 @@
 package com.usta.universityspring.rest;
 
+import com.usta.universityspring.model.Asignaturas;
 import com.usta.universityspring.model.Docente;
 import com.usta.universityspring.servicios.DocenteServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,10 @@ public class DocenteRes {
     private ResponseEntity<List<Docente>> listrarDocente(){
         return ResponseEntity.ok(docenteServicio.listarDocentes());
     }
+    @GetMapping(value = "/listar/{id}")
+    private ResponseEntity<Optional<Docente>> listrarDocenteById(@PathVariable("id")Long id){
+        return ResponseEntity.ok(docenteServicio.findByIdDocente(id));
+    }
     @PostMapping("/crearDocente")
     private ResponseEntity<Docente> crearDocente(@RequestBody Docente docente){
         Docente temporal = docenteServicio.crearDocente(docente);
@@ -41,13 +46,8 @@ public class DocenteRes {
         }
     }
     @DeleteMapping("/docente/{id}")
-    public String eliminarDocente(@PathVariable Long id){
-        Optional<Docente> Docente = docenteServicio.findByIdDocente(id);
-        if (Docente.isPresent()){
-            docenteServicio.eliminarDocente(id);
-            return "Docente eliminada con el id "+id;
-        }else{
-            throw new RuntimeException("Docente no encontrada con ese id "+id);
-        }
+    public ResponseEntity<Void> eliminarDocente(@PathVariable("id") Long id){
+        docenteServicio.eliminarDocente(id);
+        return ResponseEntity.ok().build();
     }
 }

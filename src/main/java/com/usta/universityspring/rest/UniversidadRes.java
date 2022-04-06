@@ -1,6 +1,7 @@
 package com.usta.universityspring.rest;
 
 
+import com.usta.universityspring.model.Facultad;
 import com.usta.universityspring.model.Universidad;
 import com.usta.universityspring.servicios.UniversidadServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,10 @@ public class UniversidadRes {
     private ResponseEntity<List<Universidad>> listarUniversidad() {
         return ResponseEntity.ok(universidadServicio.getAllUniversidad());
     }
+    @GetMapping(value = "/listar/{id}")
+    private ResponseEntity<Optional<Universidad>> listarUniversidadById(@PathVariable("id")Long id){
+        return ResponseEntity.ok(universidadServicio.findByIdUniversidad(id));
+    }
     @PostMapping("/crearUniversidad")
     private ResponseEntity<Universidad> guardarUniversidad(@RequestBody Universidad universidad){
         Universidad temporal = universidadServicio.crearUniversidad(universidad);
@@ -44,13 +49,8 @@ public class UniversidadRes {
     }
 
     @DeleteMapping("/universidad/{id}")
-    public String delete(@PathVariable Long id){
-        Optional<Universidad> universidad = universidadServicio.findByIdUniversidad(id);
-        if (universidad.isPresent()){
-            universidadServicio.eliminarUniversidad(id);
-            return "universidad eliminada con el id "+id;
-        }else{
-            throw new RuntimeException("universidad no encontrada con ese id "+id);
-        }
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        universidadServicio.eliminarUniversidad(id);
+        return ResponseEntity.ok().build();
     }
 }
